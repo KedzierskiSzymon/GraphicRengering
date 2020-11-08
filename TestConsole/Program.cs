@@ -1,4 +1,5 @@
-﻿using Library;
+﻿using Common.Structures;
+using Library;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace TestConsole
         {
             //DateTime dateFrom = DateTime.Now;
 
+            // Color definitions
             ColorBuffer buffer = new ColorBuffer(400, 600);
             Color bufferColor = new Color(0x0000ff, false);
             Color triangleColor = new Color(0x888888, false);
@@ -24,9 +26,10 @@ namespace TestConsole
             buffer.ClearColor(bufferColor);
             buffer.ClearDepth();
 
+            // Primitives definitions
             Point[] trianglePoints = new Point[]
             {
-                new Point(1, 0, 0.5f, triangleColor),
+                new Point(0, 0, 0.5f, triangleColor),
                 new Point(-1, 0, 0.5f, triangleColor),
                 new Point(1, 1, 0.5f, triangleColor),
 
@@ -34,17 +37,31 @@ namespace TestConsole
             
             Point[] trianglePoints2 = new Point[]
             {
-                new Point(-1.5f, 0, 1, red),
-                new Point(0, 1, 0.5f, green),
-                new Point(0.5f, -1, 0, blue),
+                new Point(1, 0, 0.5f, red),
+                new Point(-1, 0, 0.5f, green),
+                new Point(1, 1, 0.5f, blue),
 
             };
             Triangle triangle = new Triangle(trianglePoints);
             Triangle triangle2 = new Triangle(trianglePoints2);
+
+            // Vertex buffer
+            VertexProcessor vertexProcessor = new VertexProcessor();
+            vertexProcessor.SetPerspective(45, 1, 4, 1000);
+            //vertexProcessor.MultiplyByRotation(100, new Float3(1, 1, 0));
+
+            triangle.Points[0].Coordinate = vertexProcessor.Tr(triangle.Points[0].Coordinate);
+            triangle.Points[1].Coordinate = vertexProcessor.Tr(triangle.Points[1].Coordinate);
+            triangle.Points[2].Coordinate = vertexProcessor.Tr(triangle.Points[2].Coordinate);
+
+            triangle2.Points[0].Coordinate = vertexProcessor.Tr(triangle2.Points[0].Coordinate);
+            triangle2.Points[1].Coordinate = vertexProcessor.Tr(triangle2.Points[1].Coordinate);
+            triangle2.Points[2].Coordinate = vertexProcessor.Tr(triangle2.Points[2].Coordinate);
+
             buffer.Print(triangle);
             buffer.Print(triangle2);
 
-            buffer.SaveImage("SzymonKędzierski_l2.png", true);
+            buffer.SaveImage("SzymonKędzierski_l4.png", true);
 
             //DateTime dateTo = DateTime.Now;
 

@@ -25,9 +25,6 @@ namespace Library
         
         public Triangle(Point[] points)
         {
-            if (points.Length != 3)
-                throw new Exception($"Triange must have 3 points. Written points: '{points.Length}'");
-
             _points = points;
             Points = _points;
             _lambdas = new float[3];
@@ -63,7 +60,8 @@ namespace Library
         {
             if (FirstCondition(width, height) &&
                 SecondCondition(width, height) &&
-                ThirdCondition(width, height))
+                ThirdCondition(width, height) &&
+                EdgeCooling(width, height))
             {
                 return true;
             }
@@ -124,6 +122,31 @@ namespace Library
 
             return false;
         }
+
+        private bool EdgeCooling(int width, int height)
+        {
+            float tl1 = float.Epsilon;
+            float tl2 = float.Epsilon;
+            float tl3 = float.Epsilon;
+
+            if (_dy12 > 0 || (_dy12 == 0 && _dx12 < 0))
+                tl1 = 0;
+
+            if (_dy23 > 0 || (_dy23 == 0 && _dx23 < 0))
+                tl2 = 0;
+
+            if (_dy31 > 0 || (_dy31 == 0 && _dx31 < 0))
+                tl3 = 0;
+
+            if (_dx12 * (height - Y[0]) - _dy12 * (width - X[0]) <= 0 + tl1 &&
+                _dx23 * (height - Y[1]) - _dy23 * (width - X[1]) <= 0 +  tl2 &&
+                _dx31 * (height - Y[2]) - _dy31 * (width - X[2]) <= 0 + tl3)
+            {
+                return false;
+            }
+
+            return true;
+        }
         #endregion
         #region Lambdas for calculating color in triangle
         public void CalculateLambdas(int width, int height)
@@ -171,7 +194,7 @@ namespace Library
         private void CalculateConstantPoints()
         {
             _dx12 = X[0] - X[1];
-            _dx23 = X[1] - X[2;
+            _dx23 = X[1] - X[2];
             _dx31 = X[2] - X[0];
 
             _dy12 = Y[0] - Y[1];

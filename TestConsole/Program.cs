@@ -1,5 +1,6 @@
 ﻿using Common.Structures;
 using Library;
+using Library.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,60 +14,54 @@ namespace TestConsole
         static void Main(string[] args)
         {
             //DateTime dateFrom = DateTime.Now;
-
+            Scene scene = new Scene(400, 600);
             // Color definitions
-            ColorBuffer buffer = new ColorBuffer(400, 600);
-            Color bufferColor = new Color(0x0000ff, false);
-            Color triangleColor = new Color(0x888888, false);
-
-            Color red = new Color(0xff0000, false);
-            Color green = new Color(0x00ff00, false);
-            Color blue = new Color(0x0000ff, false);
-
-            buffer.ClearColor(bufferColor);
-            buffer.ClearDepth();
 
             // Primitives definitions
             Point[] trianglePoints = new Point[]
             {
-                new Point(0, 0, 0.5f, triangleColor),
-                new Point(-1, 0, 0.5f, triangleColor),
-                new Point(1, 1, 0.5f, triangleColor),
+                new Point(-1, -1, 6f, Color.Black),
+                new Point(-1, 0, 6f, Color.Black),
+                new Point(1, -1, 6f, Color.Black),
 
             };
             
             Point[] trianglePoints2 = new Point[]
             {
-                new Point(1, 0, 0.5f, red),
-                new Point(-1, 0, 0.5f, green),
-                new Point(1, 1, 0.5f, blue),
+                new Point(0, 0, 6, Color.Red),
+                new Point(0.5f, 1, 6, Color.Green),
+                new Point(1, 0.5f, 6, Color.Blue),
 
             };
             Triangle triangle = new Triangle(trianglePoints);
             Triangle triangle2 = new Triangle(trianglePoints2);
 
-            // Vertex buffer
-            VertexProcessor vertexProcessor = new VertexProcessor();
-            vertexProcessor.SetPerspective(45, 1, 4, 1000);
-            //vertexProcessor.MultiplyByRotation(100, new Float3(1, 1, 0));
+            scene.SetPerspective(45, 1, 1, 1000);
+            scene.SetLookAt(new Float3(0f, 0.0f, 0), new Float3(1, 0.0f, 1), new Float3(0, 1, 0));
+            scene.Objects.Add(triangle2);
+            scene.SetIdentity();
+            
+            scene.Translate(new Float3(1, 0, 0));
+            scene.Translate(new Float3(5, 0, 0));
+            scene.Scale(new Float3(3, 3, 3));
+            scene.Rotate(50, new Float3(0, 0, 1));
+            //scene.Translate(scene.Objects[0], new Float3(1, 0, 0));
+            scene.Transform();
+            scene.Tr(scene.Objects[0]);
 
-            triangle.Points[0].Coordinate = vertexProcessor.Tr(triangle.Points[0].Coordinate);
-            triangle.Points[1].Coordinate = vertexProcessor.Tr(triangle.Points[1].Coordinate);
-            triangle.Points[2].Coordinate = vertexProcessor.Tr(triangle.Points[2].Coordinate);
+            //scene.Objects.Add(triangle2);
+            //scene.InitializeFigures();
 
-            triangle2.Points[0].Coordinate = vertexProcessor.Tr(triangle2.Points[0].Coordinate);
-            triangle2.Points[1].Coordinate = vertexProcessor.Tr(triangle2.Points[1].Coordinate);
-            triangle2.Points[2].Coordinate = vertexProcessor.Tr(triangle2.Points[2].Coordinate);
 
-            buffer.Print(triangle);
-            buffer.Print(triangle2);
+            //scene.Translate(scene.Objects[0], new Float3(0, 0, 0));
+            //scene.Rotate(scene.Objects[0], 50, new Float3(0, 0, 1));
 
-            buffer.SaveImage("SzymonKędzierski_l4.png", true);
+            //scene.Tr(scene.Objects[0]);
 
-            //DateTime dateTo = DateTime.Now;
 
-            //Console.WriteLine($"Duration time: {(dateTo - dateFrom).TotalMilliseconds} ms");
-            //Console.ReadKey();
+            //vertexProcessor.Rotate(45, new Float3(0, -1, 0));
+
+            scene.Print();
         }
     }
 }

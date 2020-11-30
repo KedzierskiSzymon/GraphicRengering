@@ -9,3 +9,12 @@
 /Library/bin/Debug
 /Common/bin/Debug
 /TestConsole/bin/Debug
+/Library/bin/Release
+/Library/obj/Release
+/View/bin/Debug
+/View/bin/Release
+/View/obj
+/Common/bin/Release
+/Common/obj/Release
+/TestConsole/bin/Release
+/TestConsole/obj/Release

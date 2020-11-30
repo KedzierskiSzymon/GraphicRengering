@@ -46,11 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ColorBuffer.cs" />
-    <Compile Include="Color.cs" />
     <Compile Include="MathMethods.cs" />
-    <Compile Include="Point.cs" />
+    <Compile Include="Models\Cube.cs" />
+    <Compile Include="Models\Figure.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Triangle.cs" />
+    <Compile Include="Models\Triangle.cs" />
+    <Compile Include="Scene.cs" />
     <Compile Include="VertexProcessor.cs" />
   </ItemGroup>
   <ItemGroup>

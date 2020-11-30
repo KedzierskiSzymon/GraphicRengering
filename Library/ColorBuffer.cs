@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Library.Models;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Windows;
 using static Library.MathMethods;
+using Color = Common.Structures.Color;
+using Point = Common.Structures.Point;
 
 namespace Library
 {
@@ -34,6 +37,10 @@ namespace Library
         public ColorBuffer(int width, int height)
         {
             SetSize(width, height);
+            _color = Color.Black;
+
+            ClearColor();
+            ClearDepth();
         }
 
         public void Print(Triangle triangle)
@@ -101,6 +108,40 @@ namespace Library
             }
         }
 
+        public Bitmap GetBitmap()
+        {
+            Bitmap bitmap = new Bitmap(_width, _height);
+                try
+                {
+                    BitmapData dstData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+
+                    unsafe
+                    {
+                        byte* dstPointer = (byte*)dstData.Scan0;
+
+                        for (int height = 0; height < _height; height++)
+                        {
+                            for (int width = 0; width < _width; width++)
+                            {
+                                dstPointer[POINTER_BLUE] = _pixels[width, height].B;
+                                dstPointer[POINTER_GREEN] = _pixels[width, height].G;
+                                dstPointer[POINTER_RED] = _pixels[width, height].R;
+                                dstPointer[POINTER_ALPHA] = _pixels[width, height].A;
+
+                                dstPointer += BYTES_PER_PIXEL;
+                            }
+                        }
+                    }
+
+                    bitmap.UnlockBits(dstData);
+                }
+                catch (Exception e)
+                {
+                }
+
+            return bitmap;
+        }
+
         public void SaveImage(string filepath, bool openImage=false)
         {
             // Source: https://stackoverflow.com/questions/24701703/c-sharp-faster-alternatives-to-setpixel-and-getpixel-for-bitmaps-for-windows-f
@@ -119,10 +160,10 @@ namespace Library
                         {
                             for (int width = 0; width < _width; width++)
                             {
-                                dstPointer[POINTER_BLUE] = _pixels[width, height].Blue;
-                                dstPointer[POINTER_GREEN] = _pixels[width, height].Green;
-                                dstPointer[POINTER_RED] = _pixels[width, height].Red;
-                                dstPointer[POINTER_ALPHA] = _pixels[width, height].Alpha;
+                                dstPointer[POINTER_BLUE] = _pixels[width, height].B;
+                                dstPointer[POINTER_GREEN] = _pixels[width, height].G;
+                                dstPointer[POINTER_RED] = _pixels[width, height].R;
+                                dstPointer[POINTER_ALPHA] = _pixels[width, height].A;
 
                                 dstPointer += BYTES_PER_PIXEL;
                             }

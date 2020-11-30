@@ -1,16 +1,14 @@
-﻿using System;
+﻿using Common.Structures;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Library
+namespace Library.Models
 {
-    public class Triangle
+    public class Triangle : Figure
     {
-        public Point[] _points;
-        public readonly Point[] Points;
-
         public int[] X;
         public int[] Y;
 
@@ -23,33 +21,48 @@ namespace Library
         private float _dy23;
         private float _dy31;
         
-        public Triangle(Point[] points)
+        public Triangle(IList<Point> points)
         {
-            _points = points;
-            Points = _points;
+            Points = points;
             _lambdas = new float[3];
+
+            Triangles.Add(this);
+        }
+
+        public Triangle(Point p1, Point p2, Point p3)
+        {
+            Points = new List<Point>()
+            { 
+                p1,
+                p2,
+                p3
+            };
+            _lambdas = new float[3];
+
+            Triangles.Add(this);
         }
 
         public Triangle(Triangle triangle)
         {
-            _points = new Point[]
+            Points = new List<Point>
             {
                 triangle.Points[0],
                 triangle.Points[1],
                 triangle.Points[2]
             };
 
-            _points = Points;
             _lambdas = new float[3];
+
+            Triangles.Add(this);
         }
 
         public void CalculatePixelPoints(int width, int height)
         {
-            X = _points
+            X = Points
                 .Select(p => GetValueInPixel(p.X, width))
                 .ToArray();
 
-            Y = _points
+            Y = Points
                 .Select(p => GetValueInPixel(p.Y, height))
                 .ToArray();
 

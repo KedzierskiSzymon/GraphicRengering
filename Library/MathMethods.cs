@@ -40,7 +40,7 @@ namespace Library
 
             return right;
         }
-
+        /*
         public static void Normalize(IList<float> vector)
         {
             float maxValue = vector
@@ -50,7 +50,7 @@ namespace Library
 
             for (int i = 0; i < vector.Count; i++)
                 vector[i] *= factor;
-        }
+        }*/
 
         public static Float3 Cross(Float3 left, Float3 right)
         {

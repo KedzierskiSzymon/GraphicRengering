@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Library
+namespace Common.Structures
 {
     public class Point
     {
@@ -28,12 +28,14 @@ namespace Library
             }
         }
 
-        public Point(float x, float y, float z, Color color)
+        public Point(float x, float y, float z, Color color = Color.White)
         {
             X = x;
             Y = y;
             Z = z;
             Color = color;
+
+            Coordinate = new Float3(X, Y, Z);
         }
     }
 }

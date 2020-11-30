@@ -37,6 +37,13 @@ namespace Common.Structures
         public float Z => this[2];
         public float W => this[3];
 
+        public static float Dot(Float4 left, Float4 right)
+        {
+            float dot = left.X * right.X + left.Y * right.Y + left.Z * right.Z + left.W * right.W;
+
+            return dot;
+        }
+
         public static Float4 operator *(Float4 vector, float value)
         {
             Float4 newVector = new Float4
@@ -57,10 +64,22 @@ namespace Common.Structures
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < 4; j++)
-                    newVector[i] += left[i] * right[i][j];
+                    newVector[i] += left[j] * right[j][i];
             }
 
             return newVector;
+        }
+
+        public static Float4 operator -(Float4 value)
+        {
+            return new Float4(-value.X, -value.Y, -value.Z, -value.W);
+        }
+
+        public override string ToString()
+        {
+            string result = $"X: '{X}' Y: '{Y}' Z: '{Z}' W: {W}";
+
+            return result;
         }
     }
 }

@@ -3,7 +3,7 @@ using System;
 using System.Globalization;
 using System.Windows;
 
-namespace Library
+namespace Common.Structures
 {
     public class Color
     {
@@ -31,7 +31,7 @@ namespace Library
         private byte _blue;
         private byte _alpha;
 
-        public byte Red
+        public byte R
         {
             get
             {
@@ -43,7 +43,7 @@ namespace Library
                 RecalculateValue();
             }
         }
-        public byte Green
+        public byte G
         {
             get
             {
@@ -55,7 +55,7 @@ namespace Library
                 RecalculateValue();
             }
         }
-        public byte Blue
+        public byte B
         {
             get
             {
@@ -67,7 +67,7 @@ namespace Library
                 RecalculateValue();
             }
         }
-        public byte Alpha
+        public byte A
         {
             get
             {
@@ -143,15 +143,55 @@ namespace Library
             return info;
         }
 
+        public static Color Red
+        {
+            get
+            {
+                return new Color(0xff0000, false);
+            }
+        }
+
+        public static Color Green
+        {
+            get
+            {
+                return new Color(0x00ff00, false);
+            }
+        }
+
+        public static Color Blue
+        {
+            get
+            {
+                return new Color(0x0000ff, false);
+            }
+        }
+
+        public static Color Black
+        {
+            get
+            {
+                return new Color(0x000000, false);
+            }
+        }
+
+        public static Color White
+        {
+            get
+            {
+                return new Color(0xffffff, false);
+            }
+        }
+
         #region Operators
         public static Color operator *(float value, Color color)
         {
             Color returnedColor = new Color()
             {
-                Red = (byte)(color.Red * value),
-                Green = (byte)(color.Green * value),
-                Blue = (byte)(color.Blue * value),
-                Alpha = color.Alpha,
+                R = (byte)(color.R * value),
+                G = (byte)(color.G * value),
+                B = (byte)(color.B * value),
+                A = color.A,
             };
 
             return returnedColor;
@@ -161,10 +201,10 @@ namespace Library
         {
             Color returnedColor = new Color()
             {
-                Red = (byte)(color.Red * value),
-                Green = (byte)(color.Green * value),
-                Blue = (byte)(color.Blue * value),
-                Alpha = color.Alpha,
+                R = (byte)(color.R * value),
+                G = (byte)(color.G * value),
+                B = (byte)(color.B * value),
+                A = color.A,
             };
 
             return returnedColor;
@@ -174,10 +214,10 @@ namespace Library
         {
             Color returnedColor = new Color()
             {
-                Red = (byte)(left.Red + right.Red),
-                Green = (byte)(left.Green + right.Green),
-                Blue = (byte)(left.Blue + right.Blue),
-                Alpha = left.Alpha
+                R = (byte)(left.R + right.R),
+                G = (byte)(left.G + right.G),
+                B = (byte)(left.B + right.B),
+                A = left.A
             };
 
             return returnedColor;
@@ -205,17 +245,15 @@ namespace Library
             {
                 string message = $"Invalid color values. Color = '{string.Join("", currentColorValueHexText)}'. Message: {Environment.NewLine}" +
                     $"'{e.Message}'";
-
-                MessageBox.Show(message);
             }
         }
 
         private void RecalculateValue()
         {
-            string red = Red.ToString(Formats.Hexadecimal);
-            string green = Green.ToString(Formats.Hexadecimal);
-            string blue = Blue.ToString(Formats.Hexadecimal);
-            string alpha = Alpha.ToString(Formats.Hexadecimal);
+            string red = R.ToString(Formats.Hexadecimal);
+            string green = G.ToString(Formats.Hexadecimal);
+            string blue = B.ToString(Formats.Hexadecimal);
+            string alpha = A.ToString(Formats.Hexadecimal);
 
             string colorValueText = red + green + blue + alpha;
             uint colorValue = uint.Parse(colorValueText, NumberStyles.HexNumber);

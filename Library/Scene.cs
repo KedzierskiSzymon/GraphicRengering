@@ -28,30 +28,30 @@ namespace Library
             _vertexProcessor.SetPerspective(fovY, aspect, near, far);
         }
 
-        public void SetLookAt(Float3 eye, Float3 center, Float3 up)
+        public void SetLookAt(Vector3 eye, Vector3 center, Vector3 up)
         {
             _vertexProcessor.SetLookAt(eye, center, up);
         }
 
-        public void Translate(Float3 value)
+        public void Translate(Vector3 value)
         {
             _vertexProcessor.Translate(value);
 
         }
 
-        public void Rotate(float angle, Float3 value)
+        public void Rotate(float angle, Vector3 value)
         {
             _vertexProcessor.Rotate(angle, value);
         }
 
-        public void Scale(Float3 value)
+        public void Scale(Vector3 value)
         {
-            _vertexProcessor.Scale(value);
+            //_vertexProcessor.Scale(value);
         }
 
         public void Tr(Figure figure)
         {
-            foreach (Point point in figure.Points)
+            foreach (Point point in figure.Vertices)
                 point.Coordinate = _vertexProcessor.Tr(point.Coordinate);
         }
 
@@ -65,7 +65,7 @@ namespace Library
             _vertexProcessor.Transform();
             _vertexProcessor.SetIdentity();
         }
-
+        /*
         public void Print()
         {
             foreach (Figure figure in Objects)
@@ -75,6 +75,6 @@ namespace Library
             }
 
             _colorBuffer.SaveImage("SzymonKędzierski_l5.png", true);
-        }
+        }*/
     }
 }

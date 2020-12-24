@@ -14,11 +14,11 @@ namespace Common.Structures
         public float Z { get; set; }
 
         public Color Color { get; set; }
-        public Float3 Coordinate
+        public Vector3 Coordinate
         {
             get
             {
-                return new Float3(X, Y, Z);
+                return new Vector3(X, Y, Z);
             }
             set
             {
@@ -28,14 +28,24 @@ namespace Common.Structures
             }
         }
 
-        public Point(float x, float y, float z, Color color = Color.White)
+        public Point(float x, float y, float z, Color color)
         {
             X = x;
             Y = y;
             Z = z;
             Color = color;
 
-            Coordinate = new Float3(X, Y, Z);
+            Coordinate = new Vector3(X, Y, Z);
+        }
+
+        public Point(float x, float y, float z)
+        {
+            X = x;
+            Y = y;
+            Z = z;
+            Color = Color.Red;
+
+            Coordinate = new Vector3(X, Y, Z);
         }
     }
 }

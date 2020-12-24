@@ -15,53 +15,46 @@ namespace TestConsole
         {
             //DateTime dateFrom = DateTime.Now;
             Scene scene = new Scene(400, 600);
-            // Color definitions
 
-            // Primitives definitions
-            Point[] trianglePoints = new Point[]
-            {
-                new Point(-1, -1, 6f, Color.Black),
-                new Point(-1, 0, 6f, Color.Black),
-                new Point(1, -1, 6f, Color.Black),
+            ColorBuffer colorBuffer = new ColorBuffer(400, 600);
+            Rasterizer rasterizer = new Rasterizer(colorBuffer);
+            ImageBuilder imageBuilder = new ImageBuilder(colorBuffer);
 
-            };
-            
-            Point[] trianglePoints2 = new Point[]
-            {
-                new Point(0, 0, 6, Color.Red),
-                new Point(0.5f, 1, 6, Color.Green),
-                new Point(1, 0.5f, 6, Color.Blue),
+            //colorBuffer.ClearColor(Color.Red.ColorToUInt());
+            colorBuffer.ClearColor(0x00101010);
+            colorBuffer.ClearDepth(10);
 
-            };
-            Triangle triangle = new Triangle(trianglePoints);
-            Triangle triangle2 = new Triangle(trianglePoints2);
+            VertexProcessor vertexProcessor = new VertexProcessor();
+            vertexProcessor.SetPerspective(45, 1, 1, 1000);
+            vertexProcessor.SetLookAt(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.0f, 0.0f, 1), new Vector3(0, 1, 0));
 
-            scene.SetPerspective(45, 1, 1, 1000);
-            scene.SetLookAt(new Float3(0f, 0.0f, 0), new Float3(1, 0.0f, 1), new Float3(0, 1, 0));
-            scene.Objects.Add(triangle2);
-            scene.SetIdentity();
-            
-            scene.Translate(new Float3(1, 0, 0));
-            scene.Translate(new Float3(5, 0, 0));
-            scene.Scale(new Float3(3, 3, 3));
-            scene.Rotate(50, new Float3(0, 0, 1));
-            //scene.Translate(scene.Objects[0], new Float3(1, 0, 0));
-            scene.Transform();
-            scene.Tr(scene.Objects[0]);
+            vertexProcessor.SetIdentity();
+            vertexProcessor.Scale(5, 2, 2);
+            vertexProcessor.Translate(new Vector3(1, 2, 8));
+            vertexProcessor.Transform();
 
-            //scene.Objects.Add(triangle2);
-            //scene.InitializeFigures();
+            Pyramid pyramid = new Pyramid(4);
+            pyramid.Print(rasterizer, vertexProcessor);
 
+            vertexProcessor.SetIdentity();
+            vertexProcessor.Scale(3, 3, 3);
+            vertexProcessor.Rotate(45, new Vector3(1, 0, 0));
+            vertexProcessor.Translate(new Vector3(-1, -7, 10));
+            vertexProcessor.Transform();
 
-            //scene.Translate(scene.Objects[0], new Float3(0, 0, 0));
-            //scene.Rotate(scene.Objects[0], 50, new Float3(0, 0, 1));
+            Sphere sphere = new Sphere(10, 10);
+            sphere.Print(rasterizer, vertexProcessor);
 
-            //scene.Tr(scene.Objects[0]);
+            vertexProcessor.SetIdentity();
+            vertexProcessor.Translate(new Vector3(-1, -2, 10));
+            vertexProcessor.Scale(2.5f, 5, 2.5f);
+            vertexProcessor.Rotate(90, new Vector3(0, 0, 1));
+            vertexProcessor.Transform();
 
+            Pyramid pyramid2 = new Pyramid(16);
+            pyramid2.Print(rasterizer, vertexProcessor);
 
-            //vertexProcessor.Rotate(45, new Float3(0, -1, 0));
-
-            scene.Print();
+            imageBuilder.SaveImage("SzymonKędzierski_l5.bmp");
         }
     }
 }

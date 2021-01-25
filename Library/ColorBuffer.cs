@@ -16,41 +16,47 @@ namespace Library
         public int Width { get; set; }
         public int Height { get; set; }
 
-        public uint[,] Pixels { get; set; }
-        public float[,] DepthBuffer { get; set; }
+        public Color[,] Color { get; set; }
+        public float[,] Depth { get; set; }
+
+        public int MinX { get; set; }
+        public int MaxX { get; set; }
+        public int MinY { get; set; }
+        public int MaxY { get; set; }
 
 
         public ColorBuffer(int width, int height)
         {
-            Pixels = new uint[width, height];
-            DepthBuffer = new float[width, height];
+            Color = new Color[width, height];
+            Depth = new float[width, height];
 
             Width = width;
             Height = height;
 
             for (int i = 0; i < Width; i++)
+            {
                 for (int j = 0; j < Height; j++)
-                    DepthBuffer[i, j] = float.MaxValue;
+                    Depth[i, j] = float.MaxValue;
+            }
         }
 
 
-        public void ClearColor(uint color)
+        public void ClearColor(Color color)
         {
             for (int i = 0; i < Width; i++)
+            {
                 for (int j = 0; j < Height; j++)
-                    Pixels[i, j] = color;
+                    Color[i, j] = color;
+            }
         }
 
         public void ClearDepth(float depth)
         {
             for (int i = 0; i < Width; i++)
+            {
                 for (int j = 0; j < Height; j++)
-                    DepthBuffer[i, j] = depth;
-        }
-
-        public uint[,] GetPixels()
-        {
-            return Pixels;
+                    Depth[i, j] = depth;
+            }
         }
     }
 }

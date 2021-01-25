@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
@@ -20,21 +19,21 @@ namespace Library
 
         public void SaveImage(string filename, bool openFile = true)
         {
-            uint[,] pixels = _colorBuffer.Pixels;
-            Bitmap bitmap = new Bitmap(_colorBuffer.Width, _colorBuffer.Height);
+            Common.Structures.Color[,] pixels = _colorBuffer.Color;
+            System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(_colorBuffer.Width, _colorBuffer.Height);
 
-            for (int i = 0; i < _colorBuffer.Width; i++)
+            for (int width = 0; width < _colorBuffer.Width; width++)
             {
-                for (int j = 0; j < _colorBuffer.Height; j++)
+                for (int height = 0; height < _colorBuffer.Height; height++)
                 {
-                    uint pixel = pixels[i, j];
+                    Common.Structures.Color pixel = pixels[width, height];
 
-                    int B = (int)(pixel & 0xff); pixel >>= 8;
-                    int G = (int)(pixel & 0xff); pixel >>= 8;
-                    int R = (int)(pixel & 0xff); pixel >>= 8;
-                    int A = (int)(pixel & 0xff);
+                    int B = GetValidColor((int)pixel.B);
+                    int G = GetValidColor((int)pixel.G);
+                    int R = GetValidColor((int)pixel.R);
+                    int A = GetValidColor((int)pixel.A);
 
-                    bitmap.SetPixel(i, _colorBuffer.Height - j - 1, Color.FromArgb(A, R, G, B));
+                    bitmap.SetPixel(width, _colorBuffer.Height - height - 1, System.Drawing.Color.FromArgb(A, R, G, B));
                 }
             }
 
@@ -42,6 +41,17 @@ namespace Library
 
             if (openFile)
                 System.Diagnostics.Process.Start(filename);
+        }
+
+        private int GetValidColor(int color)
+        {
+            if (color < byte.MinValue)
+                return byte.MinValue;
+
+            if (color > byte.MaxValue)
+                return byte.MaxValue;
+
+            return color;
         }
     }
 }

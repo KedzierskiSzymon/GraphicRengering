@@ -9,10 +9,10 @@ namespace Library.Models
 {
     public class Sphere : Figure
     {
-        public Sphere(int horizontalSegms, int verticalSegms)
+        public Sphere(int verticalSegms, int horizontalSegms)
         {
-            Triangles = new Int3[2 * horizontalSegms * verticalSegms];
-            Vertices = new Common.Structures.Point[verticalSegms * (horizontalSegms + 2)];
+            Indexes = new Int3[2 * horizontalSegms * verticalSegms];
+            Vertices = new Point[verticalSegms * (horizontalSegms + 2)];
 
             for (int i = 0; i <= horizontalSegms + 1; i++)
             {
@@ -31,13 +31,13 @@ namespace Library.Models
             {
                 for (int j = 0; j < verticalSegms; j++)
                 {
-                    Triangles[j + 2 * i * verticalSegms] = new Int3(
+                    Indexes[j + 2 * i * verticalSegms] = new Int3(
                         (j + 1) % verticalSegms + i * verticalSegms,
                         j + verticalSegms + i * verticalSegms,
                         (j + 1) % verticalSegms + verticalSegms + i * verticalSegms
                     );
 
-                    Triangles[j + verticalSegms + 2 * i * verticalSegms] = new Int3(
+                    Indexes[j + verticalSegms + 2 * i * verticalSegms] = new Int3(
                         j + verticalSegms + i * verticalSegms,
                         j + 2 * verticalSegms + i * verticalSegms,
                         (j + 1) % verticalSegms + verticalSegms + i * verticalSegms

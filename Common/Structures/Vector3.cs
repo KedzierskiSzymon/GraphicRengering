@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using System;
 
 namespace Common.Structures
 {
@@ -62,6 +59,17 @@ namespace Common.Structures
 
             return dot;
         }
+
+        public static Vector3 Saturate(Vector3 value)
+        {
+            Vector3 result = new Vector3(
+                Clamp(value.X, 0f, 1f),
+                Clamp(value.Y, 0f, 1f),
+                Clamp(value.Z, 0f, 1f)
+                );
+
+            return result;
+        }
         #endregion
 
         #region Operators
@@ -76,6 +84,9 @@ namespace Common.Structures
 
         public static Vector3 operator *(Vector3 vector3, float scale) =>
             new Vector3(vector3.X * scale, vector3.Y * scale, vector3.Z * scale);
+
+        public static Vector3 operator *(float scale, Vector3 vector3) =>
+            new Vector3(vector3.X * scale, vector3.Y * scale, vector3.Z * scale);
         #endregion
 
 
@@ -84,6 +95,20 @@ namespace Common.Structures
             string message = $"X : {X}    Y : {Y}    Z : {Z}";
 
             return message;
+        }
+
+        private static float Clamp(float value, float min, float max)
+        {
+            if (value.CompareTo(min) < 0)
+            {
+                return min;
+            }
+            else if (value.CompareTo(max) > 0)
+            {
+                return max;
+            }
+            
+            return value;
         }
     }
 }

@@ -9,18 +9,7 @@ namespace Library.Models
 {
     public class Triangle : Figure
     {
-        public int[] X;
-        public int[] Y;
-
-        public Triangle(Point[] points)
-        {
-            Vertices = points;
-
-            Triangles = new Int3[1];
-            Triangles[0] = new Int3(0, 1, 2);
-        }
-
-        public Triangle(Point p1, Point p2, Point p3)
+        public Triangle(Point p1, Point p2, Point p3, Color color1, Color color2, Color color3)
         {
             Vertices = new Point[]
             { 
@@ -29,8 +18,12 @@ namespace Library.Models
                 p3
             };
 
-            Triangles = new Int3[1];
-            Triangles[0] = new Int3(0, 1, 2);
+            Vertices[0].Color = color1;
+            Vertices[1].Color = color2;
+            Vertices[2].Color = color3;
+
+            Indexes = new Int3[1];
+            Indexes[0] = new Int3(0, 1, 2);
         }
 
         public Triangle(Triangle triangle)
@@ -42,8 +35,8 @@ namespace Library.Models
                 triangle.Vertices[2]
             };
 
-            Triangles = new Int3[1];
-            Triangles[0] = new Int3(0, 1, 2);
+            Indexes = new Int3[1];
+            Indexes[0] = new Int3(0, 1, 2);
         }
     }
 }

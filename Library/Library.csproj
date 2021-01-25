@@ -47,7 +47,10 @@
   <ItemGroup>
     <Compile Include="ColorBuffer.cs" />
     <Compile Include="ImageBuilder.cs" />
+    <Compile Include="Lights\DirectionalLight.cs" />
     <Compile Include="Lights\Light.cs" />
+    <Compile Include="Lights\PointLight.cs" />
+    <Compile Include="Lights\SpotLight.cs" />
     <Compile Include="MathMethods.cs" />
     <Compile Include="Models\Cube.cs" />
     <Compile Include="Models\Figure.cs" />

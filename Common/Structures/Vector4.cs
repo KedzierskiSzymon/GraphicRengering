@@ -10,6 +10,7 @@ namespace Common.Structures
     {
         public float W { get; set; }
 
+        #region Constructors
         public Vector4(float x, float y, float z, float w = 0) 
             : base(x, y, z)
         {
@@ -27,7 +28,7 @@ namespace Common.Structures
         {
             W = w;
         }
-
+        #endregion
 
         #region Operators
         public static Vector4 operator *(Vector4 vector4, float scalar) =>
@@ -46,12 +47,16 @@ namespace Common.Structures
 
         public static Vector4 operator *(Vector4 vector4, Matrix4x4 matrix)
         {
-            float x = vector4.X * matrix[0].X + vector4.Y * matrix[1].X + vector4.Z * matrix[2].X + vector4.W * matrix[3].X;
-            float y = vector4.X * matrix[0].Y + vector4.Y * matrix[1].Y + vector4.Z * matrix[2].Y + vector4.W * matrix[3].Y;
-            float z = vector4.X * matrix[0].Z + vector4.Y * matrix[1].Z + vector4.Z * matrix[2].Z + vector4.W * matrix[3].Z;
-            float w = vector4.X * matrix[0].W + vector4.Y * matrix[1].W + vector4.Z * matrix[2].W + vector4.W * matrix[3].W;
+            float[] temp = new float[4] { 0, 0, 0, 0 };
 
-            Vector4 result = new Vector4(x, y, z, w);
+            for (int i = 0; i < 4; ++i)
+            {
+                temp[i] += vector4.X * matrix[i].X;
+                temp[i] += vector4.Y * matrix[i].Y;
+                temp[i] += vector4.Z * matrix[i].Z;
+                temp[i] += vector4.W * matrix[i].W;
+            }
+            Vector4 result = new Vector4(temp[0], temp[1], temp[2], temp[3]);
 
             return result;
         }

@@ -17,7 +17,7 @@ namespace Library.Models
             int tSize = 2 * segments;
             int vSize = segments + 2;
 
-            Triangles = new Int3[tSize];
+            Indexes = new Int3[tSize];
             Vertices = new Point[vSize];
 
             float angleStep = (float)(Math.PI * 2 / segments);
@@ -38,13 +38,13 @@ namespace Library.Models
             //Assigning vertices to trinagles
             for (int i = 0; i < tSize / 2; i++)
             {
-                Int3 Triangle;
+                Int3 triangle;
                 //Lower triangles
-                Triangle = new Int3(i % segments, (i + 1) % segments, vSize - 2);
-                Triangles[i] = Triangle;
+                triangle = new Int3(i % segments, (i + 1) % segments, vSize - 2);
+                Indexes[i] = triangle;
 
-                Triangle = new Int3(i % segments, vSize - 1, (i + 1) % segments);
-                Triangles[i + segments] = Triangle;
+                triangle = new Int3(i % segments, vSize - 1, (i + 1) % segments);
+                Indexes[i + segments] = triangle;
             }
         }
     }

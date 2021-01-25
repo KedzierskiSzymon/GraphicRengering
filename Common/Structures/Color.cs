@@ -7,14 +7,20 @@ namespace Common.Structures
 {
     public class Color
     {
-        public byte A { get; set; }
-        public byte R { get; set; }
-        public byte G { get; set; }
-        public byte B { get; set; }
+        public float A => 0;
+        public float R { get; set; }
+        public float G { get; set; }
+        public float B { get; set; }
 
-        public Color(byte a, byte r, byte g, byte b)
+        public Color(byte r, byte g, byte b)
         {
-            A = a;
+            R = r;
+            G = g;
+            B = b;
+        }
+
+        public Color(float r, float g, float b)
+        {
             R = r;
             G = g;
             B = b;
@@ -22,45 +28,30 @@ namespace Common.Structures
 
         public Color(uint color)
         {
-            A = (byte)(color | 0xff000000);
             R = (byte)(color | 0x00ff0000);
             G = (byte)(color | 0x0000ff00);
             B = (byte)(color | 0x000000ff);
         }
 
-
-        public uint ColorToUInt()
+        public static Color VectorToColor(Vector3 vector)
         {
-            uint color = 0x00000000;
+            byte r = (byte)(Clamp(vector.X) * 255);
+            byte g = (byte)(Clamp(vector.Y) * 255);
+            byte b = (byte)(Clamp(vector.Z) * 255);
 
-            color |= A; 
-            color <<= 8;
-            color |= R; 
-            color <<= 8;
-            color |= G; 
-            color <<= 8;
-            color |= B;
-
-            return color;
+            return new Color(r, g, b);
         }
 
-        public static uint ColorToUInt(Color colorRGB)
+        public Vector3 ToVector3()
         {
-            uint color = 0x00000000;
-            color |= colorRGB.A; 
-            color <<= 8;
-            color |= colorRGB.R; 
-            color <<= 8;
-            color |= colorRGB.G; 
-            color <<= 8;
-            color |= colorRGB.B;
+            Vector3 vector3 = new Vector3(R, G, B);
+            vector3 = vector3.Normalize();
 
-            return color;
+            return vector3;
         }
 
         public static Color operator *(float factor, Color color)
         {
-            color.A = (byte)(color.A * factor);
             color.R = (byte)(color.R * factor);
             color.G = (byte)(color.G * factor);
             color.B = (byte)(color.B * factor);
@@ -80,5 +71,16 @@ namespace Common.Structures
         public static Color Blue => new Color(0x0000ff00);
         public static Color Black => new Color(0x00000000);
         public static Color White => new Color(0xffffff00);
+
+        private static float Clamp(float value, float min = 0, float max = 1)
+        {
+            if (value > max)
+                return max;
+
+            if (value < min)
+                return min;
+
+            return value;
+        }
     }
 }

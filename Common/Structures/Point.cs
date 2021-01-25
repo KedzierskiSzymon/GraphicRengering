@@ -9,43 +9,34 @@ namespace Common.Structures
 {
     public class Point
     {
-        public float X { get; set; }
-        public float Y { get; set; }
-        public float Z { get; set; }
-
         public Color Color { get; set; }
-        public Vector3 Coordinate
-        {
-            get
-            {
-                return new Vector3(X, Y, Z);
-            }
-            set
-            {
-                X = value.X;
-                Y = value.Y;
-                Z = value.Z;
-            }
-        }
+        public Vector3 Coordinate { get; set; }
+        public Vector3 Normal { get; set; }
 
         public Point(float x, float y, float z, Color color)
         {
-            X = x;
-            Y = y;
-            Z = z;
+            Coordinate = new Vector3(x, y, z);
             Color = color;
+        }
 
-            Coordinate = new Vector3(X, Y, Z);
+        public Point(float x, float y, float z, float normalX, float normalY, float normalZ)
+        {
+            Coordinate = new Vector3(x, y, z);
+            Normal = new Vector3(normalX, normalY, normalZ);
+            Color = new Color(255, 255, 255);
         }
 
         public Point(float x, float y, float z)
         {
-            X = x;
-            Y = y;
-            Z = z;
-            Color = Color.Red;
+            Coordinate = new Vector3(x, y, z);
+            Color = new Color(255, 255, 255);            
+        }
 
-            Coordinate = new Vector3(X, Y, Z);
+        public Point(Vector3 coordinate, Vector3 normal, Color color)
+        {
+            Coordinate = coordinate;
+            Normal = normal;
+            Color = color;
         }
     }
 }

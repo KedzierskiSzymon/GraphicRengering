@@ -125,10 +125,10 @@ namespace Library
 
             if (v4.W != 0)
             {
-                return new Vector3(v4.X, v4.Y, v4.Z);
+                return new Vector3(v4.X / v4.W, v4.Y / v4.W, v4.Z / v4.W);
             }
 
-            return new Vector3(v4.X / v4.W, v4.Y / v4.W, v4.Z / v4.W);
+            return new Vector3(v4.X, v4.Y, v4.Z);
         }
 
         public Point Tr(Point point)
@@ -137,10 +137,10 @@ namespace Library
 
             if (v4.W == 0)
             {
-                return new Point(v4.X, v4.Y, v4.Z, point.Normal.X, point.Normal.Y, point.Normal.Z);
+                return new Point(v4.X, v4.Y, v4.Z, point.Normal.X, point.Normal.Y, point.Normal.Z, point.TexturePosition.X, point.TexturePosition.Y);
             }
 
-            return new Point(v4.X / v4.W, v4.Y / v4.W, v4.Z / v4.W, point.Normal.X, point.Normal.Y, point.Normal.Z);
+            return new Point(v4.X / v4.W, v4.Y / v4.W, v4.Z / v4.W, point.Normal.X, point.Normal.Y, point.Normal.Z, point.TexturePosition.X, point.TexturePosition.Y);
         }
 
         public void Scale(float scale)

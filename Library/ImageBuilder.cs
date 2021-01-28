@@ -17,6 +17,11 @@ namespace Library
             _colorBuffer = colorBuffer;
         }
 
+        public void LoadTexture()
+        {
+
+        }
+
         public void SaveImage(string filename, bool openFile = true)
         {
             Common.Structures.Color[,] pixels = _colorBuffer.Color;

@@ -15,6 +15,8 @@ namespace Library.Lights
         public Vector3 Specular { get; set; }
         public float Shininess { get; set; }
 
+        public Texture Texture { get; set; }
+
         public abstract Vector3 Calculate(Point point, VertexProcessor vertexProcessor);
 
         protected Vector3 Reflect(Vector3 vector, Vector3 normalVector)

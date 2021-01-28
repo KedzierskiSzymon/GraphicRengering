@@ -26,10 +26,22 @@ namespace Library.Lights
             float specularFactor = Saturate(Vector3.Dot(R, V));
             specularFactor = (float)Math.Pow(specularFactor, Shininess);
 
-            Vector3 color = diffuseFactor * Diffuse +
-                 + specularFactor * Specular
-                 + Ambient;
+            Vector3 diffuseValue = diffuseFactor * Diffuse;
+            Vector3 specularValue = specularFactor * Specular;
 
+            Vector3 texSample = new Vector3(1, 1, 1);
+
+            if (Texture != null)
+            {
+                //int c = texture->frame[int(point.TexturePosition.X * (texture.Width - 1) + 0.5f) + int(point.TexturePosition.Y * (texture.Height - 1) + 0.5f) * texture.Width];
+                int width = (int)Math.Round(point.TexturePosition.X * (Texture.Width - 1));
+                int height = (int)Math.Round(point.TexturePosition.Y * (Texture.Height - 1));
+
+                texSample = Texture[width, height].ToVector3();
+                texSample = Vector3.Cross((Ambient + diffuseValue), texSample + specularValue);
+            }
+
+            Vector3 color = texSample;
             color = Vector3.Saturate(color);
 
             return color;

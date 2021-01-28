@@ -77,5 +77,24 @@ namespace Library.Models
             for (int i = 0; i < Vertices.Length; i++)
                 Vertices[i].Normal = Vertices[i].Normal.Normalize();
         }
+
+        public void MakeUV()
+        {           
+            //Spherical mapping: x - u, y - v
+            for (int i = 0; i < Vertices.Length; i++)
+            {
+                //vertices[i].texturePos.x = (1 / (2 * PI)) * atan2(vertices[i].position.z, vertices[i].position.y);
+                //vertices[i].texturePos.x = (((vertices[i].texturePos.x - (-1)) * (1 - 0)) / (1 - (-1)) + 0);
+
+                Vertices[i].TexturePosition.X = 0.5f + (float)((Math.Atan2(Vertices[i].Coordinate.X, Vertices[i].Coordinate.Z)) / (2 * Math.PI));
+
+                //vertices[i].texturePos.y = (1 / PI) * tan(vertices[i].position.y / (sqrt(vertices[i].position.x * vertices[i].position.x + vertices[i].position.y * vertices[i].position.y + vertices[i].position.z * vertices[i].position.z)));
+                //vertices[i].texturePos.y = (((vertices[i].texturePos.y - (-1)) * (1 - 0)) / (1 - (-1)) + 0);
+
+                Vertices[i].TexturePosition.Y = 0.5f + (float)(Math.Asin(Vertices[i].Coordinate.Y) / Math.PI);
+
+                Vertices[i].TexturePosition.Z = 0.0f;
+            }
+        }
     }
 }

@@ -98,7 +98,7 @@ namespace Library
             _colorBuffer.MinX = (int)Math.Min(x1, Math.Min(x2, x3));
             _colorBuffer.MaxX = (int)Math.Max(x1, Math.Max(x2, x3));
             _colorBuffer.MinY = (int)Math.Min(y1, Math.Min(y2, y3));
-            _colorBuffer.MaxX = (int)Math.Max(y1, Math.Max(y2, y3));
+            _colorBuffer.MaxY = (int)Math.Max(y1, Math.Max(y2, y3));
 
             _colorBuffer.MinX = Math.Max(_colorBuffer.MinX, 0);
             _colorBuffer.MaxX = Math.Min(_colorBuffer.MaxX, _colorBuffer.Width - 1);
@@ -211,7 +211,9 @@ namespace Library
                                 (v1.Normal.X * lambda1 + v2.Normal.X * lambda2 + v3.Normal.X * lambda3), 
                                 (v1.Normal.Y * lambda1 + v2.Normal.Y * lambda2 + v3.Normal.Y * lambda3), 
                                 (v1.Normal.Z * lambda1 + v2.Normal.Z * lambda2 + v3.Normal.Z * lambda3)),
-                            v1.Color
+                            v1.Color,
+                            v1.TexturePosition.X * lambda1 + v2.TexturePosition.X * lambda2 + v3.TexturePosition.X * lambda3,
+                            v1.TexturePosition.Y * lambda1 + v2.TexturePosition.Y * lambda2 + v3.TexturePosition.Y * lambda3
                 );
 
                         Vector3 colorCalculated = light.Calculate(f, vertexProcessor);
